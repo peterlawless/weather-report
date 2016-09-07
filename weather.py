@@ -27,12 +27,19 @@ class WeatherReport:
     def get_ten_day_forecast(self):
         data = self.get_json('forecast10day')['forecast']['txt_forecast']['forecastday']
         for item in data:
-            print(item['title'], ":")
+            print(item['title'] + ":")
             print(item['fcttext'], "\n")
 
     def get_alerts(self):
         data = self.get_json('alerts')['alerts'][0]
         print(data['description'], "in effect until", data['expires'])
+
+    def get_sunrise_and_sunset(self):
+        data = self.get_json('astronomy')['sun_phase']
+        print("Sunrise at", data['sunrise']['hour'] + ":" +
+              data['sunrise']['minute'])
+        print("Sunset at", data['sunset']['hour'] + ":" +
+              data['sunset']['minute'])
 
 
 def main():
@@ -48,8 +55,9 @@ def main():
         print("1. Current Conditions")
         print("2. Ten Day Forecast.")
         print("3. Current Weather Alerts")
-        selection = input('>>>')
-        if selection not in ['1', '2', '3']:
+        print("4. Sunrise and Sunset Times")
+        selection = input('>>> ')
+        if selection not in ['1', '2', '3', '4']:
             print("Invalid input.")
             continue
         else:
@@ -61,6 +69,8 @@ def main():
         weather_report.get_ten_day_forecast()
     elif selection == '3':
         weather_report.get_alerts()
+    elif selection == '4':
+        weather_report.get_sunrise_and_sunset()
 
 if __name__ == '__main__':
     main()
