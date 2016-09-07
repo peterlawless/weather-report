@@ -1,7 +1,6 @@
 from secret import api_key
 import requests
 import requests_mock
-import json
 import re
 
 
@@ -15,7 +14,9 @@ def main():
             break
     base = "http://api.wunderground.com/api/"
     url = base + api_key + "/conditions/q/zmw:" + zip_code + ".1.99999.json"
-    print(url)
+
+    x = requests.get(url).json()['current_observation']
+    print(x['temperature_string'])
 
 if __name__ == '__main__':
     main()
