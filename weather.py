@@ -9,8 +9,11 @@ class WeatherReport:
         self.api_key = api_key
 
     def get_json(self, endpoint):
-        base = "http://api.wunderground.com/api/"
-        url = base + api_key + "/" + endpoint + "/q/zmw:" + self.zip_code + ".1.99999.json"
+        base = "http://api.wunderground.com/api/" + api_key + "/"
+        if endpoint == 'currenthurricane':
+            url = base + endpoint + "/view.json"
+        else:
+            url = base + endpoint + "/q/zmw:" + self.zip_code + ".1.99999.json"
         return requests.get(url).json()
 
     def get_current_conditions(self):
@@ -41,6 +44,11 @@ class WeatherReport:
         print("Sunset at", data['sunset']['hour'] + ":" +
               data['sunset']['minute'])
 
+    def get_current_hurricanes(self):
+        data = self.get_json('currenthurricane')['currenthurricane']
+        for item in data:
+            print(item['stormInfo']['stormName_Nice'])
+
 
 def main():
     while True:
@@ -56,8 +64,9 @@ def main():
         print("2. Ten Day Forecast.")
         print("3. Current Weather Alerts")
         print("4. Sunrise and Sunset Times")
+        print("5. Current Hurricanes")
         selection = input('>>> ')
-        if selection not in ['1', '2', '3', '4']:
+        if selection not in ['1', '2', '3', '4', '5']:
             print("Invalid input.")
             continue
         else:
@@ -71,6 +80,8 @@ def main():
         weather_report.get_alerts()
     elif selection == '4':
         weather_report.get_sunrise_and_sunset()
+    elif selection == '5':
+        weather_report.get_current_hurricanes()
 
 if __name__ == '__main__':
     main()
