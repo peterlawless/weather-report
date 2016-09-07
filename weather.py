@@ -30,6 +30,10 @@ class WeatherReport:
             print(item['title'], ":")
             print(item['fcttext'], "\n")
 
+    def get_alerts(self):
+        data = self.get_json('alerts')['alerts'][0]
+        print(data['description'], "in effect until", data['expires'])
+
 
 def main():
     while True:
@@ -42,9 +46,10 @@ def main():
     while True:
         print("Please select your report: ")
         print("1. Current Conditions")
-        print("2. Ten Day Forecast. \n")
+        print("2. Ten Day Forecast.")
+        print("3. Current Weather Alerts")
         selection = input('>>>')
-        if selection not in ['1', '2']:
+        if selection not in ['1', '2', '3']:
             print("Invalid input.")
             continue
         else:
@@ -54,6 +59,8 @@ def main():
         weather_report.get_current_conditions()
     elif selection == '2':
         weather_report.get_ten_day_forecast()
+    elif selection == '3':
+        weather_report.get_alerts()
 
 if __name__ == '__main__':
     main()
