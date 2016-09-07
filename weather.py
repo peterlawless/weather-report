@@ -16,7 +16,9 @@ def main():
     url = base + api_key + "/conditions/q/zmw:" + zip_code + ".1.99999.json"
 
     x = requests.get(url).json()['current_observation']
-    print(x['temperature_string'])
+    print("Wind is blowing ", x['wind_dir'], "at ", x['wind_mph'], "mph \
+with gusts reaching ", x['wind_gust_mph'], " mph.")
+    print("Temperature: ",x['temperature_string'])
 
 if __name__ == '__main__':
     main()
