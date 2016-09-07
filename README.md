@@ -17,5 +17,7 @@ To successfully use this repository, you must sign up for an API key and save it
 as a string with the variable name *api_key* in a file called secret.py in the
 same directory as this repository.
 
-When the you run the application weather.py, you will be asked for a zip code, and 
-the summary will be for that location.
+When the you run the application weather.py, you will be asked for a zip code, and
+ then you will be asked for a number to select from a menu of options including
+current location, ten-day forecast, sunrise and sunset times, and current
+ hurricanes (anywhere).
